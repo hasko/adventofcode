@@ -95,7 +95,6 @@ def flood():
     while True:
         new_queue = []
         while len(queue) > 0:
-            print(str(d) + ": " + str(len(queue)))
             p = queue.pop(0)
             if p not in mem:
                 mem.append(p)
@@ -121,3 +120,6 @@ if mode == "test":
     else:
         print("Distance test failed")
 print("Maximum distance: " + str(max_dist))
+
+mil_rooms = len([dist[p] for p in dist if dist[p] >= 1000])
+print("Number of rooms with path length 1000: " + str(mil_rooms))
