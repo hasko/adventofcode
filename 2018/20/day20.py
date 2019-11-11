@@ -4,12 +4,13 @@ mode = sys.argv[2]
 
 with open(sys.argv[1], "r") as f:
     lines = f.readlines()
-    l = lines.pop(0).strip()
     expression = ""
-    while len(l) > 0:
-        expression += l
+    while True:
         l = lines.pop(0).strip()
+        expression += l
+        if l[-1] == "$": break
     if mode == "test":
+        l = lines.pop(0).strip()    
         maze_sol = []
         l = lines.pop(0).strip()
         while len(l) > 0:
@@ -86,3 +87,38 @@ if mode == "test":
             print("Wrong maze")
             exit()
     print("Maze test passed")
+
+def flood():
+    dist = {}
+    queue = [(0, 0)]
+    d = 0
+    mem = []
+    while True:
+        new_queue = []
+        while len(queue) > 0:
+            print(str(d) + ": " + str(len(queue)))
+            p = queue.pop(0)
+            if p not in mem:
+                mem.append(p)
+                dist[p] = d
+                if (p[0] - 1, p[1]) in maze_dict:
+                    new_queue.append((p[0] - 2, p[1]))
+                if (p[0] + 1, p[1]) in maze_dict:
+                    new_queue.append((p[0] + 2, p[1]))
+                if (p[0], p[1] - 1) in maze_dict:
+                    new_queue.append((p[0], p[1] - 2))
+                if (p[0], p[1] + 1) in maze_dict:
+                    new_queue.append((p[0], p[1] + 2))
+        if len(new_queue) == 0: break
+        queue = new_queue
+        d += 1
+    return dist
+
+dist = flood()
+max_dist = max([dist[p] for p in dist])
+if mode == "test":
+    if solution == max_dist:
+        print("Distance test passed")
+    else:
+        print("Distance test failed")
+print("Maximum distance: " + str(max_dist))
