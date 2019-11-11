@@ -10,7 +10,7 @@ with open(sys.argv[1], "r") as f:
         expression += l
         if l[-1] == "$": break
     if mode == "test":
-        l = lines.pop(0).strip()    
+        l = lines.pop(0).strip()
         maze_sol = []
         l = lines.pop(0).strip()
         while len(l) > 0:
@@ -25,7 +25,6 @@ def expand(index, pos_init):
     pos = pos_init
     next = expression[index]
     while next is not "$":
-        print(str(index) + " " + next)
         if next == "^":
             index += 1
         elif next is "N":
