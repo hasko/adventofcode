@@ -1,8 +1,7 @@
 import csv
-import math
 
 def calc(m):
-    return max(math.floor(m / 3) - 2, 0)
+    return max(m // 3 - 2, 0)
 
 with open("data.csv", "r") as csvfile:
     data = csv.reader(csvfile);
